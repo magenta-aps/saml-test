@@ -16,9 +16,7 @@
       changed_when: false
 
   roles:
-  - git
+  - apache_setup
   - simplesamlphp
-  - dh_gui
-  - setup
 
 ...

@@ -6,4 +6,10 @@
       update_cache: yes
       state: present
 
+  - name: Run setup for SimpleSAMLPHP
+    shell: ./setup.sh
+    args:
+      chdir: /vagrant/ansible/roles/simplesamlphp/files/
+    become: true
+
 ...

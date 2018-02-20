@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Frank Thomsen Renard
-  description: Runs one time setup
+  description: Installs and configures Apache2 to serve a simple website
   company: Magenta ApS
   license: MPLv2
   min_ansible_version: 1.2

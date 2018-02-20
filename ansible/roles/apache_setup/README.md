@@ -1,7 +1,7 @@
 Run one time setup
 ==================
 
-Run one time setup
+Installs and configures Apache2 to host a simple site on port 8080
 
 Usage
 -----

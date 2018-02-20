@@ -1,9 +1,0 @@
----
-
-  - name: Run one time setup
-    command: ./setup.sh
-    args:
-      chdir: /vagrant
-    become: true
-    
-...

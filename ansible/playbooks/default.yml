@@ -17,6 +17,8 @@
 
   roles:
   - git
-  - chown
+  - simplesamlphp
+  - dh_gui
+  - setup
 
 ...

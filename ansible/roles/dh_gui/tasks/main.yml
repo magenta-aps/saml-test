@@ -1,0 +1,17 @@
+---
+
+  - name: Install packages based on package.json
+    npm:
+      path: /vagrant/www
+      state: latest
+    become: true
+    become_user: vagrant
+
+  - name: Build the webapp frontend once
+    shell: npm run build
+    args:
+      chdir: /vagrant/www
+    become: true
+    become_user: vagrant
+
+...

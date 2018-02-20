@@ -1,0 +1,9 @@
+---
+
+  - name: Install SimpleSAMLPHP
+    apt:
+      name: simplesamlphp
+      update_cache: yes
+      state: present
+
+...

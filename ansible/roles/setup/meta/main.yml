@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  author: Emil Madsen
-  description: Installs python, pip and virtualenv
+  author: Frank Thomsen Renard
+  description: Runs one time setup
   company: Magenta ApS
   license: MPLv2
   min_ansible_version: 1.2

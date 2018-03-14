@@ -1,0 +1,71 @@
+---
+# tasks file for apache
+
+- name: Install Apache HTTP Webserver
+  apt:
+    name: apache2
+    state: present
+
+- name: Install mod_auth_mellon
+  apt:
+    name: libapache2-mod-auth-mellon
+    state: present
+
+- name: Disable all Apache sites
+  file:
+    path: "/etc/apache2/sites-enabled"
+    state: absent
+
+- name: Create /etc/apache2/sites-enabled folder
+  file:
+    path: "/etc/apache2/sites-enabled"
+    state: directory
+
+- name: Enable Apache modules
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - headers
+    - proxy
+#    - proxy_http
+    - rewrite
+    - ssl
+  notify: restart apache2
+
+- name: Copy HTTP and HTTPS configurations to server
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/apache2/sites-available/{{ item }}"
+  with_items:
+    - dh.conf
+#    - dh-ssl.conf
+
+- name: Enable the Alfresco HTTP and HTTPS sites
+  file:
+    src: "/etc/apache2/sites-available/{{ item }}"
+    dest: "/etc/apache2/sites-enabled/{{ item }}"
+    state: link
+  with_items:
+    - dh.conf
+ #   - dh-ssl.conf
+  notify: restart apache2
+
+- name: Copy ports configuration to server
+  template:
+    src: ports.conf.j2
+    dest: /etc/apache2/ports.conf
+  notify: restart apache2
+
+- name: Create the mellon folder
+  file:
+    path: /etc/apache2/mellon
+    state: directory
+  tags:
+    - mellonFolder
+
+- name: Create dummy IdP metadata file
+  copy:
+    src: dummy-idp-metadata.xml
+    dest: /etc/apache2/mellon/idp-metadata.cml
+    force: no

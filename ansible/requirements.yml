@@ -1,1 +1,4 @@
-# - src: geerlingguy.nodejs
+- src: git+https://github.com/magenta-aps/ansible-role-common-server-configuration.git
+  version: master
+  name: common-server-configuration
+

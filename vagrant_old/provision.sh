@@ -11,10 +11,6 @@ fi
 
 # Install Ansible (if required)
 if ! [ -x "$(command -v ansible)" ]; then
-    echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu xenial main" \
-    >> /etc/apt/sources.list
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-    apt-get update
     apt-get install -y ansible
 fi
 
@@ -29,10 +25,10 @@ REQUIREMENTS_PATH=/vagrant/ansible/requirements.yml
 PLAYBOOK_PATH=/vagrant/ansible/playbooks/$PLAYBOOK
 
 # Install the playbook requirements
-ANSIBLE_ROLES_PATH=$ROLES_PATH PYTHONUNBUFFERED=1 ANSIBLE_FORCE_COLOR=true \
+ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_ROLES_PATH=$ROLES_PATH PYTHONUNBUFFERED=1 ANSIBLE_FORCE_COLOR=true \
 ansible-galaxy install -r $REQUIREMENTS_PATH
 
 # Run the playbook
 cd /vagrant/
-ANSIBLE_ROLES_PATH=$ROLES_PATH PYTHONUNBUFFERED=1 ANSIBLE_FORCE_COLOR=true \
+ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_ROLES_PATH=$ROLES_PATH PYTHONUNBUFFERED=1 ANSIBLE_FORCE_COLOR=true \
 ansible-playbook --timeout=30 -vv -i "localhost," -c local $PLAYBOOK_PATH

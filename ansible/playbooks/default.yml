@@ -15,8 +15,12 @@
       apt: update_cache=yes cache_valid_time=84600
       changed_when: false
 
+  vars:
+    hostname: dh.example.org
+
   roles:
-  - apache_setup
-  - simplesamlphp
+    - common-server-configuration
+    - apache
+#    - simplesamlphp
 
 ...

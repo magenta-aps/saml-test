@@ -1,10 +1,25 @@
 ---
 # tasks file for simplesamlphp
 
-- name: Install PHP
+- name: Install PHP, PHP extensions and other necessary packages
   apt:
-    name: php
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - php
+    - php-date
+    - libmcrypt4
+    - php-mcrypt
+    - libmcrypt-dev
+    - mcrypt
+    - php-ldap
+    - php-radius
+    - php-mysql
+    - php-sqlite3
+    - php-json
+    - php-mbstring
+    - php-xml
+    - composer
 
 - name: Check if SimpleSAMLphp is already installed
   stat:
@@ -15,8 +30,19 @@
   git:
     repo: "https://github.com/simplesamlphp/simplesamlphp.git"
     dest: /var/simplesamlphp
-    version: v1.15.4
-  when: simplesamlphp.stat.isdir == False
+    version: v1.15.0
+  when: simplesamlphp.stat.exists == False
+
+- name: Copy configuration template to config folder
+  shell: "cp -a /var/simplesamlphp/config-templates/* /var/simplesamlphp/config"
+
+- name: Copy configuration template to config folder
+  shell: "cp -a /var/simplesamlphp/metadata-templates/* /var/simplesamlphp/metadata"
+
+- name: Install using composer (this can be quite time consuming)
+  composer:
+    command: install
+    working_dir: /var/simplesamlphp
 
 - name: Copy IdP certificate files to server
   copy:
@@ -35,3 +61,22 @@
     path: /etc/php/7.0/apache2/php.ini
     regexp: 'openssl\.cafile='
     line: 'openssl.cafile=/etc/ssl/ca-certificates.crt'
+
+- name: Copy Apache configuration to server
+  template:
+    src: idp-ssl.conf.j2
+    dest: /etc/apache2/sites-available/idp-ssl.conf
+
+- name: Enable Apache virtual host
+  file:
+    src: /etc/apache2/sites-available/idp-ssl.conf
+    dest: /etc/apache2/sites-enabled/idp-ssl.conf
+    state: link
+  notify: restart apache
+
+- name: Set timezone
+  lineinfile:
+    path: /var/simplesamlphp/config/config.php
+    regexp: "'timezone' =>"
+    line: "    'timezone' => 'Europe/Copenhagen',"
+

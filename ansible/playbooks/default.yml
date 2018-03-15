@@ -18,6 +18,7 @@
   vars:
     hostname: dh.example.org
     idp_hostname: idp.example.org
+    # idp_admin_password: "{{ vault_idp_admin_password }}"
 
   roles:
     - common-server-configuration

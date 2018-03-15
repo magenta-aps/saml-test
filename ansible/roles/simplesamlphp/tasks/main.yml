@@ -89,3 +89,5 @@
     - { regexp: "'secretsalt' =>", line: "    'secretsalt' => 'dummy_salt',"}
     - { regexp: "'enable.saml20-idp' =>", line: "    'enable.saml20-idp' => true," }
     - { regexp: "'enable.shib13-idp' =>", line: "    'enable.shib13-idp' => true," }
+
+# touch enable

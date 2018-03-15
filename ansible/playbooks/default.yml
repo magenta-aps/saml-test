@@ -17,10 +17,11 @@
 
   vars:
     hostname: dh.example.org
+    idp_hostname: idp.example.org
 
   roles:
     - common-server-configuration
     - apache
-#    - simplesamlphp
+    - simplesamlphp
 
 ...

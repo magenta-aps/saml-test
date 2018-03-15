@@ -1,0 +1,14 @@
+---
+# tasks file for prepare-server
+
+- name: Include Debian-based tasks
+  include_tasks: debian-based.yml
+  when: ansible_os_family == "Debian"
+
+- name: Include RedHat-based tasks
+  include_tasks: redhat-based.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Set timezone to Europe/Copenhagen
+  timezone:
+    name: Europe/Copenhagen

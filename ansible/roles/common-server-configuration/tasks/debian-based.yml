@@ -1,0 +1,38 @@
+---
+
+### Perform the initial system configuration on Debian-based systems ###
+
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+
+- name: Install handy and necessary packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - vim
+    - nmap
+    - curl
+    - lsof
+    - acl
+    - software-properties-common
+
+- name: Generate danish locale
+  locale_gen:
+    name: da_DK.UTF-8
+    state: present
+  tags:
+    - locale_gen
+
+- name: Setting the locale to da_DK.UTF-8
+  copy:
+    src: locale.conf
+    dest: /etc/default/locale
+
+- name: Install ntp
+  apt:
+    name: ntp
+    state: latest

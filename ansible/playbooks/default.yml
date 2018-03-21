@@ -16,10 +16,22 @@
       changed_when: false
 
   vars:
+
+    # NOTE: it is currently not possible to change the hostnames without
+    # issuing new certificates manually
+
     hostname: dh.example.org
     idp_hostname: idp.example.org
     sp_hostname: sp.example.org
-    # idp_admin_password: "{{ vault_idp_admin_password }}"
+    certificate_dh: /etc/ssl/certs/dh.crt
+    certificate_key_dh: /etc/ssl/private/dh.key
+    certificate_ca_file: /etc/ssl/certs/ca-certificates.crt
+    saml_mellonUser: "urn:oid:0.9.2342.19200300.100.1.1"
+    saml_mellonOrganizationName: Example Organization
+    saml_mellonOrganizationUrl: dh.example.org
+    saml_mellonSPCertFile: /var/simplesamlphp/cert/sp.crt
+    saml_mellonSPPrivateKeyFile: /var/simplesamlphp/cert/sp.key
+    saml_mellonIdPMetadataFile: /etc/apache2/mellon/idp-metadata.xml
 
   roles:
     - common-server-configuration

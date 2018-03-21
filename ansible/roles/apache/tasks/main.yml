@@ -64,8 +64,7 @@
   tags:
     - mellonFolder
 
-- name: Create dummy IdP metadata file
-  copy:
-    src: dummy-idp-metadata.xml
-    dest: /etc/apache2/mellon/idp-metadata.cml
-    force: no
+- name: Copy IdP metadata file to server
+  template:
+    src: idp-metadata.xml.j2
+    dest: /etc/apache2/mellon/idp-metadata.xml
